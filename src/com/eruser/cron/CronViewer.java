@@ -2,62 +2,39 @@ package com.eruser.cron;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.util.Date;
 
 import javax.swing.*;
 
-/*
-import net.sourceforge.jdatepicker.JDatePicker;
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
-*/
-
-import com.eruser.cron.model.CronHolder;
 import com.eruser.cron.view.ControlPanel;
+import com.eruser.cron.model.CronHolder;
 
 public class CronViewer implements Runnable {
 	
-	private GridBagConstraints controlPanelConstraint;
-	private GridBagConstraints displayViewConstraint;
 
 	public CronViewer(){
-		controlPanelConstraint = new GridBagConstraints();
-		controlPanelConstraint.gridx = 0;
-		controlPanelConstraint.gridy = 0;
-		controlPanelConstraint.gridheight = 20;
-		displayViewConstraint = new GridBagConstraints();
-		displayViewConstraint.gridx = 0;
-		displayViewConstraint.gridy = 1;
+
 	}
 
-	//@Override
+	@Override
 	public void run() {
         // Create the window
-        JFrame mainFrame = new JFrame("Cron Viewer");
+        JFrame mainFrame = new JFrame("Cron Visualizer");
         // Sets the behavior for when the window is closed
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setLayout(new BorderLayout(5,5));
+        mainFrame.setLayout(new BorderLayout(10,10));
         
         JPanel cronViewPanel = new JPanel();
-        cronViewPanel.setLayout(new GridLayout(0,1));
+        cronViewPanel.setLayout(new BoxLayout(cronViewPanel, BoxLayout.Y_AXIS));
         
         JScrollPane displayViewPane = new JScrollPane(cronViewPanel);
-        
-        
 
         CronHolder holder = new CronHolder(cronViewPanel);
-        
         ControlPanel controlPanel = new ControlPanel(holder);
-        controlPanel.setLayout(new GridLayout(1,3));
-        
         
         mainFrame.add(controlPanel, BorderLayout.PAGE_START);
         mainFrame.add(displayViewPane, BorderLayout.CENTER);
 
-        mainFrame.setPreferredSize(new Dimension(800,600));
+        mainFrame.setPreferredSize(new Dimension(1350,600));
         
         // Arrange the components inside the window
         mainFrame.pack();
@@ -72,23 +49,7 @@ public class CronViewer implements Runnable {
         SwingUtilities.invokeLater(v);		
 	}
 	
-	
-	
-	public static JPanel buildDatePanel(String label, Date value) {
-		JPanel datePanel = new JPanel();
 
-		SpinnerModel model = new SpinnerDateModel();
-		JSpinner timeSpinner = new JSpinner(model);
-		JComponent editor = new JSpinner.DateEditor(timeSpinner, "MM/dd/yyyy HH:mm:ss");
-		timeSpinner.setEditor(editor);
-		if(value != null) {
-		    timeSpinner.setValue(value);
-		}
-
-		datePanel.add(timeSpinner);
-
-		return datePanel;
-		}
 	
 
 }
