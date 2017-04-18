@@ -7,11 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
-import com.eruser.cron.UIPanel;
 import com.eruser.cron.model.CronModel;
 
 public class CronDisplayPanel extends UIPanel {

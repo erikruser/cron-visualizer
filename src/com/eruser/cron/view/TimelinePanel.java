@@ -1,20 +1,15 @@
 package com.eruser.cron.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import com.eruser.cron.UIPanel;
 import org.javatuples.Triplet;
 
 public class TimelinePanel extends UIPanel {

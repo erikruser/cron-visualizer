@@ -10,7 +10,7 @@ import java.util.List;
 
 //import javax.swing.JPanel;
 
-import com.eruser.cron.UIPanel;
+import com.eruser.cron.view.UIPanel;
 import com.eruser.cron.view.TimelinePanel;
 import com.eruser.cron.view.CronDefinitionPanel;
 import com.eruser.cron.view.CronDisplayPanel;

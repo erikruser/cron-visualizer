@@ -1,7 +1,5 @@
 package com.eruser.cron.view;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -25,7 +23,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import com.eruser.cron.UIPanel;
 import com.eruser.cron.model.CronHolder;
 
 /**

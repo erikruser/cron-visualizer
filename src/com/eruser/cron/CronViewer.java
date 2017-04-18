@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import com.eruser.cron.view.ControlPanel;
 import com.eruser.cron.model.CronHolder;
-import com.eruser.cron.view.CronDefinitionPanel;
+import com.eruser.cron.view.UIPanel;
 
 public class CronViewer implements Runnable {
 	

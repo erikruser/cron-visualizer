@@ -1,4 +1,4 @@
-package com.eruser.cron;
+package com.eruser.cron.view;
 
 import javax.swing.*;
 import java.awt.*;

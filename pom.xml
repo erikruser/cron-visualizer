@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.king</groupId>
+	<groupId>com.eruser</groupId>
 	<artifactId>CronViewer</artifactId>
 	<version>1</version>
 	<name>Cron Visualizer Application</name>
@@ -19,5 +19,15 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-
+	<build>
+	<plugins>
+	<plugin>
+  		<groupId>org.codehaus.mojo</groupId>
+  		<artifactId>exec-maven-plugin</artifactId>
+  		<configuration>
+			<mainClass>com.eruser.cron.CronViewer</mainClass>
+  		</configuration>
+	</plugin>
+	</plugins>
+	</build>
 </project>
