@@ -18,9 +18,10 @@ import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.eruser.cron.UIPanel;
 import com.eruser.cron.model.CronHolder;
 
-public class ControlPanel extends JPanel implements ActionListener, ChangeListener {
+public class ControlPanel extends UIPanel implements ActionListener, ChangeListener {
 
 	private Date endDate;
 	private CronHolder holder;
@@ -43,7 +44,7 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
 		endDate = cal.getTime();
 		holder.setEndDate(endDate);
 		
-		JPanel durationPanel = new JPanel();
+		UIPanel durationPanel = new UIPanel();
 		durationPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 30));
 		
 		durationPanel.add(new JLabel("View next "));

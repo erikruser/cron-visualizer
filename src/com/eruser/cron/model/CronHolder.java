@@ -8,8 +8,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.JPanel;
+//import javax.swing.JPanel;
 
+import com.eruser.cron.UIPanel;
 import com.eruser.cron.view.TimelinePanel;
 import com.eruser.cron.view.CronDefinitionPanel;
 import com.eruser.cron.view.CronDisplayPanel;
@@ -20,8 +21,8 @@ public class CronHolder {
 	private TimelinePanel timelinePanel;
 	private List<CronDisplayPanel> cronDisplays;
 	private CronSumPanel sumDisplay;
-	private HashMap<Integer, JPanel> defAndDispPanels = new HashMap<Integer, JPanel>();
-	private JPanel cronViewPanel;
+	private HashMap<Integer, UIPanel> defAndDispPanels = new HashMap<Integer, UIPanel>();
+	private UIPanel cronViewPanel;
 	
 	private Date endDate;
 	
@@ -30,7 +31,7 @@ public class CronHolder {
 	
 	int numCrons = 0;
 	
-	public CronHolder(JPanel cronViewPanel){
+	public CronHolder(UIPanel cronViewPanel){
 		
 		cronDisplays = new ArrayList<CronDisplayPanel>();
 		this.cronViewPanel = cronViewPanel;
@@ -40,11 +41,12 @@ public class CronHolder {
 		timelinePanel.setMinimumSize(dispDim);
 		timelinePanel.setMaximumSize(dispDim);
 		timelinePanel.setPreferredSize(dispDim);
-		JPanel defAndDispPanel = new JPanel(new GridBagLayout());
-		defAndDispPanel.setMaximumSize(new Dimension(1400,30));
-		JPanel emptyPanel = new JPanel();
-		emptyPanel.setPreferredSize(new Dimension(300,30));
-		emptyPanel.setMinimumSize(new Dimension(300,30));
+        UIPanel defAndDispPanel = new UIPanel();
+        defAndDispPanel.setLayout(new GridBagLayout());
+		defAndDispPanel.setMaximumSize(new Dimension(1350,30));
+        UIPanel emptyPanel = new UIPanel();
+		emptyPanel.setPreferredSize(new Dimension(210,30));
+		emptyPanel.setMinimumSize(new Dimension(210,30));
 		defAndDispPanel.add(emptyPanel, defConstraint);
 		defAndDispPanel.add(timelinePanel, dispConstraint);
 		cronViewPanel.add(defAndDispPanel);
@@ -67,14 +69,15 @@ public class CronHolder {
 		cronDisplay.setMinimumSize(dispDim);
 		cronDisplay.setPreferredSize(dispDim);
 		CronDefinitionPanel cronDefinition = new CronDefinitionPanel(cronDisplay, this, numCrons);
-		Dimension defDim = new Dimension(300, 70);
+		Dimension defDim = new Dimension(210, 70);
 		cronDefinition.setMaximumSize(defDim);
 		cronDefinition.setMinimumSize(defDim);
 		cronDefinition.setPreferredSize(defDim);
 		
 		cronDisplays.add(cronDisplay);
 		
-		JPanel defAndDispPanel = new JPanel(new GridBagLayout());
+		UIPanel defAndDispPanel = new UIPanel();
+        defAndDispPanel.setLayout(new GridBagLayout());
 		defAndDispPanel.add(cronDefinition, defConstraint);
 		defAndDispPanel.add(cronDisplay, dispConstraint);
 		defAndDispPanel.setMaximumSize(new Dimension(1400,70));
@@ -101,7 +104,7 @@ public class CronHolder {
 	
 	
 	public void deleteCron(Integer cronId){
-		JPanel panelToDelete = defAndDispPanels.get(cronId);
+        UIPanel panelToDelete = defAndDispPanels.get(cronId);
 		cronViewPanel.remove(panelToDelete);
 		cronViewPanel.invalidate();
 		cronViewPanel.revalidate();

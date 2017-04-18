@@ -11,9 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import com.eruser.cron.UIPanel;
 import com.eruser.cron.model.CronModel;
 
-public class CronDisplayPanel extends JPanel{
+public class CronDisplayPanel extends UIPanel {
 	
 	CronModel cronObj;
 	Integer width = 1000;
@@ -25,7 +26,7 @@ public class CronDisplayPanel extends JPanel{
 		this.setBorder(border);
 		//this.setBackground(Color.LIGHT_GRAY);
 		this.cronObj = new CronModel(endDate);
-		this.setSize(new Dimension(1000, 60));
+		this.setSize(new Dimension(1000, 100));
 	}
 	
 	

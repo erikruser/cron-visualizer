@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import com.eruser.cron.view.ControlPanel;
 import com.eruser.cron.model.CronHolder;
+import com.eruser.cron.view.CronDefinitionPanel;
 
 public class CronViewer implements Runnable {
 	
@@ -23,18 +24,20 @@ public class CronViewer implements Runnable {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(new BorderLayout(10,10));
         
-        JPanel cronViewPanel = new JPanel();
+        UIPanel cronViewPanel = new UIPanel();
         cronViewPanel.setLayout(new BoxLayout(cronViewPanel, BoxLayout.Y_AXIS));
         
         JScrollPane displayViewPane = new JScrollPane(cronViewPanel);
 
         CronHolder holder = new CronHolder(cronViewPanel);
         ControlPanel controlPanel = new ControlPanel(holder);
+
         
         mainFrame.add(controlPanel, BorderLayout.PAGE_START);
         mainFrame.add(displayViewPane, BorderLayout.CENTER);
 
-        mainFrame.setPreferredSize(new Dimension(1350,600));
+
+        mainFrame.setPreferredSize(new Dimension(1300,600));
         
         // Arrange the components inside the window
         mainFrame.pack();

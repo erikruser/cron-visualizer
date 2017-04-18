@@ -14,9 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import com.eruser.cron.UIPanel;
 import org.javatuples.Triplet;
 
-public class TimelinePanel extends JPanel{
+public class TimelinePanel extends UIPanel {
 	
 	private final Long MILLIS_IN_DAY = 86400000l;
 	private final Long MILLIS_IN_HOUR = 3600000l;

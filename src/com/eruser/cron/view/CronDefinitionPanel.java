@@ -13,8 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
@@ -24,7 +22,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import com.eruser.cron.UIPanel;
 import com.eruser.cron.model.CronHolder;
 
 /**
@@ -32,7 +33,7 @@ import com.eruser.cron.model.CronHolder;
  * @author eruser
  *
  */
-public class CronDefinitionPanel extends JPanel implements ActionListener, ChangeListener{
+public class CronDefinitionPanel extends UIPanel implements ActionListener, ChangeListener, DocumentListener {
 	
 	private final Long MILLIS_IN_DAY = 86400000l;
 	private final Long MILLIS_IN_HOUR = 3600000l;
@@ -43,13 +44,7 @@ public class CronDefinitionPanel extends JPanel implements ActionListener, Chang
 	
 	JTextField cronExpressionInput;
 	JSpinner cronExecDuration;
-	
-	GridBagConstraints expressionLabelConstraint = new GridBagConstraints();
-	GridBagConstraints textFieldConstraint = new GridBagConstraints();
-	GridBagConstraints actionButtonConstraint = new GridBagConstraints();
-	GridBagConstraints deleteButtonConstraint = new GridBagConstraints();
-	GridBagConstraints durationLabelConstraint = new GridBagConstraints();
-	GridBagConstraints durationEntryConstraint = new GridBagConstraints();
+
 	
 	//Associated display panel for this cron definition
 	CronDisplayPanel display;
@@ -62,62 +57,41 @@ public class CronDefinitionPanel extends JPanel implements ActionListener, Chang
 	
 	
 	public CronDefinitionPanel(CronDisplayPanel display, CronHolder cronHolder, int cronId){
-		
-		this.cronHolder = cronHolder;
+
+        this.cronHolder = cronHolder;
 		this.cronId = cronId;
 		
 		this.display = display;
-		Color panelBackground = this.getBackground();
 		
-		Insets insets = new Insets(5,5,5,5);
+		Insets insets = new Insets(1,1,1,1);
 
-		expressionLabelConstraint.gridx = 0;
-		expressionLabelConstraint.gridy = 0;
-		expressionLabelConstraint.insets = insets;
-		
-		textFieldConstraint.gridx = 1;
-		textFieldConstraint.gridy = 0;
-		textFieldConstraint.insets = insets;
-		
-		durationLabelConstraint.gridx = 0;
-		durationLabelConstraint.gridy = 1;
-		durationLabelConstraint.insets = insets;
-		
-		durationEntryConstraint.gridx = 1;
-		durationEntryConstraint.gridy = 1;
-		durationEntryConstraint.insets = insets;
-		
-		actionButtonConstraint.gridx = 2;
-		actionButtonConstraint.gridy = 0;
-		actionButtonConstraint.ipadx = 10;
-		actionButtonConstraint.insets = insets;
-		
-		deleteButtonConstraint.gridx = 2;
-		deleteButtonConstraint.gridy = 1;
-		deleteButtonConstraint.ipadx = 10;
-		deleteButtonConstraint.insets = insets;
-		
 		
 		this.setLayout(new GridBagLayout());
-		
-		
+
 		Border border = BorderFactory.createBevelBorder(BevelBorder.RAISED);
 		this.setBorder(border);
-		this.setSize(new Dimension(250, 60));
+		//this.setSize(new Dimension(250, 100));
+
+
+        UIPanel expressionPanel = new UIPanel();
+
+        cronExpressionInput = new JTextField(10);
+        cronExpressionInput.getDocument().addDocumentListener(this);
+        //cronExpressionInput.addActionListener(this);
+        expressionPanel.add(cronExpressionInput);
+
+        GridBagConstraints expressionPanelConstraint = new GridBagConstraints();
+        expressionPanelConstraint.gridx = 1;
+        expressionPanelConstraint.gridy = 0;
+        expressionPanelConstraint.weightx = 1;
+        expressionPanelConstraint.weighty = 1;
+        //expressionPanelConstraint.insets = insets;
+        add(cronExpressionInput, expressionPanelConstraint);
+
 		
-		JLabel label = new JLabel("Expression");
-		label.setFont(label.getFont().deriveFont(10f));
-		add(label, expressionLabelConstraint);
-		
-		JLabel durationLabel = new JLabel("Est. Duration");
-		durationLabel.setFont(label.getFont().deriveFont(10f));
-		add(durationLabel, durationLabelConstraint);
-		
-		cronExpressionInput = new JTextField(10);
-		add(cronExpressionInput, textFieldConstraint);
-		
-		JPanel durationPanel = new JPanel();
+		UIPanel durationPanel = new UIPanel();
 		durationPanel.setLayout(new BoxLayout(durationPanel, BoxLayout.X_AXIS));
+        //durationPanel.setBorder(BorderFactory.createTitledBorder("Est. Duration"));
 
 		SpinnerModel spinnerModel = new SpinnerNumberModel(0,0, 100, 1);
 		cronExecDuration = new JSpinner(spinnerModel);
@@ -129,30 +103,36 @@ public class CronDefinitionPanel extends JPanel implements ActionListener, Chang
 		dateFieldBox.setActionCommand("updateDuration");
 		dateFieldBox.addActionListener(this);
 		durationPanel.add(dateFieldBox);
-		
+
+        GridBagConstraints durationEntryConstraint = new GridBagConstraints();
+        durationEntryConstraint.gridx = 1;
+        durationEntryConstraint.gridy = 1;
+        durationEntryConstraint.insets = insets;
 		add(durationPanel, durationEntryConstraint);
-		
-		JButton updateButton = new JButton();
-		updateButton.setBackground(panelBackground);
-		updateButton.addActionListener(this);
-		updateButton.setText("Update");
-		updateButton.setBorder(border);
-		updateButton.setActionCommand("Update");
-		add(updateButton, actionButtonConstraint);
-		
-		
+
+
 		JButton deleteButton = new JButton();
 		deleteButton.setBackground(UIManager.getColor("Panel.background"));
 		//deleteButton.setSize(100,25);
 		deleteButton.addActionListener(this);
-		deleteButton.setText("Delete");
+		deleteButton.setText("x");
 		deleteButton.setActionCommand("Delete");
 		deleteButton.setBorder(border);
+        GridBagConstraints deleteButtonConstraint = new GridBagConstraints();
+        deleteButtonConstraint.anchor = GridBagConstraints.NORTHEAST;
+        deleteButtonConstraint.gridx = 0;
+        deleteButtonConstraint.gridy = 0;
+        //deleteButtonConstraint.ipadx = 10;
+        deleteButtonConstraint.insets = insets;
 		add(deleteButton, deleteButtonConstraint);
+
 		
 	}
-	
+
 	public void actionPerformed(ActionEvent evt){
+        System.out.println(evt.toString());
+        System.out.println(evt.getActionCommand());
+
 		if("Update".equals(evt.getActionCommand())){
 			update();
 		}else if("Delete".equals(evt.getActionCommand())){
@@ -187,6 +167,7 @@ public class CronDefinitionPanel extends JPanel implements ActionListener, Chang
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
+        System.out.println(e.toString());
 		SpinnerModel spinnerModel = cronExecDuration.getModel();
 		if(spinnerModel instanceof SpinnerNumberModel){
 			durationMultiplier = ((SpinnerNumberModel)spinnerModel).getNumber().intValue();
@@ -200,4 +181,18 @@ public class CronDefinitionPanel extends JPanel implements ActionListener, Chang
 		display.setCronDuration(duration);
 	}
 
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        update();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        update();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        update();
+    }
 }
